@@ -13,4 +13,8 @@ describe("Stack", () => {
     const result = same([1, 2, 3], [4, 1, 4]);
     expect(result).toBe(false);
   });
+  test("same([1, 2, 3, 1], [4, 1, 4, 25])", () => {
+    const result = same([1, 2, 3, 1], [4, 1, 4, 25]);
+    expect(result).toBe(false);
+  });
 });
