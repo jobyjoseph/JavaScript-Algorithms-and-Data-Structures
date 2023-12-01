@@ -1,0 +1,1 @@
+Write a function `calculateTax()`. It accepts the tax amount and prints the tax amount. If the amount is greater than 50000, tax is 10%. Otherwise, the tax is 5%.

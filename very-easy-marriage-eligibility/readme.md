@@ -1,0 +1,1 @@
+Write a function `isMarriageEligible()`. It accepts `age` and `gender` as arguments. The eligibility age for girls is 18 and for boys is 21. The function prints `yes` if eligible or else it prints `no`.

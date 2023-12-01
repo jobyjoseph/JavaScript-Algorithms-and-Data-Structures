@@ -1,0 +1,1 @@
+Write a function `checkEvenOdd()` that checks if a given number is even or odd.
