@@ -60,3 +60,209 @@ var containsNearbyDuplicate = function (nums, k) {
   }
   return false;
 };
+
+=====
+
+4. https://leetcode.com/problems/summary-ranges/
+
+/**
+ * @param {number[]} nums
+ * @return {string[]}
+ */
+var summaryRanges = function(nums) {
+    const result = [];
+
+    for(let i = 0; i < nums.length; i++) {
+        let start = nums[i];
+        let end = nums[i];
+
+        while( i < nums.length && nums[i] + 1 === nums[i + 1]) {
+            end = nums[i+1];
+            i++;
+        }
+
+        if(start !== end) {
+            result.push(`${start}->${end}`);
+        } else {
+            result.push(`${start}`);
+        }
+    }
+    return result;
+};
+
+======
+
+5. https://leetcode.com/problems/range-sum-query-immutable/
+
+/**
+ * @param {number[]} nums
+ */
+var NumArray = function(nums) {
+    this.nums = nums;
+};
+
+/** 
+ * @param {number} left 
+ * @param {number} right
+ * @return {number}
+ */
+NumArray.prototype.sumRange = function(left, right) {
+    let sum = 0;
+    for(let i = left; i <= right; i++) {
+        sum += this.nums[i];
+    }
+    return sum;
+};
+
+/** 
+ * Your NumArray object will be instantiated and called as such:
+ * var obj = new NumArray(nums)
+ * var param_1 = obj.sumRange(left,right)
+ */
+
+ ======
+
+ 6. https://leetcode.com/problems/range-sum-query-2d-immutable/
+
+ /**
+ * @param {number[][]} matrix
+ */
+var NumMatrix = function(matrix) {
+    this.matrix = matrix;
+};
+
+/** 
+ * @param {number} row1 
+ * @param {number} col1 
+ * @param {number} row2 
+ * @param {number} col2
+ * @return {number}
+ */
+NumMatrix.prototype.sumRegion = function(row1, col1, row2, col2) {
+    let sum = 0;
+    for(let i = row1; i <= row2; i++) {
+        for(let j = col1; j <= col2; j++) {
+            sum += this.matrix[i][j]
+        }
+    }
+    return sum;
+};
+
+/** 
+ * Your NumMatrix object will be instantiated and called as such:
+ * var obj = new NumMatrix(matrix)
+ * var param_1 = obj.sumRegion(row1,col1,row2,col2)
+ */
+
+ ======
+
+ 7. https://leetcode.com/problems/remove-element
+
+ /**
+ * @param {number[]} nums
+ * @param {number} val
+ * @return {number}
+ */
+var removeElement = function(nums, val) {
+    let count = 0;
+    for(let i = nums.length - 1; i >= 0; i--) {
+        if(nums[i] == val) {
+            [nums[i], nums[nums.length - 1 - count]] = [nums[nums.length - 1 - count], nums[i]];
+            count++;
+        }
+    }
+    return nums.length - count;
+};
+
+======
+
+8. https://leetcode.com/problems/intersection-of-two-arrays/
+
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersection = function(nums1, nums2) {
+    let dictionary = {};
+    let result = [];
+    for(let i = 0; i < nums1.length; i++) {
+        dictionary[nums1[i]] = 1;
+    }
+    for(let i = 0; i < nums2.length; i++) {
+        if(dictionary[nums2[i]] === 1){
+            dictionary[nums2[i]]++;
+        }
+    }
+    Object.entries(dictionary).forEach(([key, value]) => {
+        if(value > 1) {
+            result.push(key);
+        }
+    });
+    return result;
+};
+
+======
+
+9. https://leetcode.com/problems/intersection-of-two-arrays-ii/
+
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var intersect = function(nums1, nums2) {
+    let dictionary = {};
+    let result = [];
+    for(let i = 0; i < nums1.length; i++) {
+        if(dictionary[nums1[i]]){
+            dictionary[nums1[i]]++;
+        } else {
+            dictionary[nums1[i]] = 1;
+        }
+    }
+    for(let i = 0; i < nums2.length; i++) {
+        if(dictionary[nums2[i]]) {
+            result.push(nums2[i]);
+            dictionary[nums2[i]]--;
+        }
+    }
+    return result;
+};
+
+======
+
+10. https://leetcode.com/problems/next-greater-element-i/
+
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+var nextGreaterElement = function(nums1, nums2) {
+    const stack = [];
+    const nextGreater = {};
+
+    for(let i = 0; i < nums2.length; i++) {
+        while(stack.length > 0 && nums2[i] > stack[stack.length - 1]) {
+            nextGreater[stack.pop()] = nums2[i];
+        }
+        stack.push(nums2[i]);
+    }
+
+    const ans = [];
+    for(let i = 0; i < nums1.length; i++) {
+        if(nextGreater[nums1[i]]) {
+            ans.push(nextGreater[nums1[i]])
+        } else {
+            ans.push(-1);
+        }
+    }
+
+    return ans;
+};
+
+======
+
+11. https://leetcode.com/problems/next-greater-element-ii/
+
