@@ -16,3 +16,139 @@ var commonChars = function(words) {
     }
     return result;
 };
+
+======
+
+2. https://leetcode.com/problems/third-maximum-number
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var thirdMax = function (nums) {
+  let a = nums.sort((a, b) => b - a);
+  let set = new Set(a);
+  let newArray = Array.from(set);
+  if (newArray.length < 3) return newArray[0];
+  return newArray[2];
+};
+
+======
+
+3. https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var findDisappearedNumbers = function(nums) {
+    let result = [];
+    let dictionary = {};
+    for(let i = 0; i < nums.length; i++) {
+        dictionary[nums[i]] = 1;
+    }
+    for(let i = 1; i <= nums.length; i++) {
+        if(!dictionary[i]) {
+            result.push(i);
+        }
+    }
+    return result;
+};
+
+======
+
+4. https://leetcode.com/problems/minimum-moves-to-equal-array-elements
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minMoves = function(nums) {
+    let sum = nums[0];
+    let min = nums[0];
+
+    // find the total # of blocks and min tower height
+    for(let i = 1; i < nums.length; i++) {
+        if(nums[i] < min) min = nums[i];
+        sum += nums[i];
+    }
+
+    return sum - (nums.length * min);
+};
+
+======
+
+5. https://leetcode.com/problems/assign-cookies/
+
+/**
+ * @param {number[]} g
+ * @param {number[]} s
+ * @return {number}
+ */
+var findContentChildren = function(g, s) {
+    const cookiesNums = s.length;
+    if (cookiesNums === 0) return 0;
+    g.sort((a, b) => a - b);
+    s.sort((a, b) => a - b);
+
+    let maxNum = 0;
+    let cookieIndex = cookiesNums - 1;
+    let childIndex = g.length - 1;
+    while(cookieIndex >= 0 && childIndex >= 0) {
+        if(s[cookieIndex] >= g[childIndex]) {
+            maxNum++;
+            cookieIndex--;
+            childIndex--;
+        } else {
+            childIndex--;
+        }
+    }
+    return maxNum;
+};
+
+======
+
+6. https://leetcode.com/problems/degree-of-an-array/
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findShortestSubArray = function(nums) {
+    let result = 0;
+    let map = {};
+    for(let i = 0; i < nums.length; i++) {
+        if(map[nums[i]]) {
+            map[nums[i]].count++;
+            map[nums[i]].right = i;
+        } else {
+            map[nums[i]] = {
+                count: 1,
+                left: i,
+                right: i
+            }
+        }
+    }
+    let maxCount = 0;
+    let maxCountArr = [];
+    for (const [key, value] of Object.entries(map)) {
+        if(value.count > maxCount) {
+            maxCountArr = [];
+            maxCountArr.push(key);
+            maxCount = value.count;
+        } else if (value.count == maxCount) {
+            maxCountArr.push(key);
+        }
+    }
+
+    if(maxCountArr.length == 1 ){
+        return map[maxCountArr[0]].right - map[maxCountArr[0]].left + 1;
+    } else {
+        let min = 50000;
+        for(let j = 0; j < maxCountArr.length; j++) {
+            if(map[maxCountArr[j]].right - map[maxCountArr[j]].left + 1 < min)
+                min = map[maxCountArr[j]].right - map[maxCountArr[j]].left + 1
+        }
+        return min;
+    }
+};
