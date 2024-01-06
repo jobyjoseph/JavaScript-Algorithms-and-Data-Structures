@@ -178,3 +178,165 @@ var canPlaceFlowers = function(flowerbed, n) {
 
         return count >= n;
 };
+
+======
+
+8. https://leetcode.com/problems/plus-one
+
+/**
+ * @param {number[]} digits
+ * @return {number[]}
+ */
+var plusOne = function(digits) {
+    return ((BigInt(digits.join(''), 10)+BigInt(1))+"").split("");
+};
+
+======
+
+9. https://leetcode.com/problems/single-number/
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var singleNumber = function(nums) {
+    let map = {};
+    for(let i = 0; i < nums.length; i++) {
+        map[nums[i]] = map[nums[i]] ? ++map[nums[i]] : 1;
+        if(map[nums[i]] == 2) {
+            delete map[nums[i]];
+        }
+    }
+    return Object.keys(map)[0];
+};
+
+======
+
+10. https://leetcode.com/problems/single-number-ii
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var singleNumber = function(nums) {
+    let map = {};
+    for(let i = 0; i < nums.length; i++) {
+        map[nums[i]] = map[nums[i]] ? ++map[nums[i]] : 1;
+        if(map[nums[i]] == 3) {
+            delete map[nums[i]];
+        }
+    }
+    return Object.keys(map)[0];
+};
+
+======
+
+11. https://leetcode.com/problems/single-number-iii/
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var singleNumber = function(nums) {
+    let map = {};
+    for(let i = 0; i < nums.length; i++) {
+        map[nums[i]] = map[nums[i]] ? ++map[nums[i]] : 1;
+        if(map[nums[i]] == 2) {
+            delete map[nums[i]];
+        }
+    }
+    return Object.keys(map);
+};
+
+======
+
+12. https://leetcode.com/problems/multiply-strings/
+
+/**
+ * @param {string} num1
+ * @param {string} num2
+ * @return {string}
+ */
+var multiply = function(num1, num2) {
+    if (num1 === '0' || num2 === '0') return '0'
+    
+    const m = num1.length, n = num2.length, res = new Array(m+n).fill(0)
+    
+    for (let i=m-1; i>=0; i--) {
+        for (let j=n-1; j>=0; j--) {
+            const p1=i+j, p2=i+j+1
+            let sum = res[p2] + Number(num1[i]) * Number(num2[j])
+            res[p2] = sum%10
+            res[p1] += Math.floor(sum/10)
+        }
+    }
+    if (res[0] === 0) res.shift()
+    return res.join('')
+};
+
+======
+
+13. https://leetcode.com/problems/valid-tic-tac-toe-state
+
+/**
+ * @param {string[]} board
+ * @return {boolean}
+ */
+var validTicTacToe = function(board) {
+    let Os = 0;
+    let Xs = 0;
+    let XWon = false;
+    let OWon = false;
+    // loop normal and check rows while getting a count of totals
+    for (let row of board) {
+        if (row === 'XXX') XWon = true;
+        if (row === 'OOO') OWon = true;
+        for (let char of row) {
+            if (char === 'O') Os++;
+            if (char === 'X') Xs++;
+        }
+    }
+    // check vertical lines
+    for (let i = 0; i < 3; i++) {
+        let str = ''
+        for (let j = 0; j < 3; j++) {
+            str += board[j][i];
+        }
+        if (str === 'XXX') XWon = true;
+        if (str === 'OOO') OWon = true;
+    }
+    // check diagonals
+    const diag1 = board[0][0] + board[1][1] + board[2][2];
+    const diag2 = board[0][2] + board[1][1] + board[2][0];
+    if (diag1 === 'XXX' || diag2 === 'XXX') XWon = true;
+    if (diag1 === 'OOO' || diag2 === 'OOO') OWon = true;
+
+    if (Os > Xs) return false; // X plays first
+    if (Xs > Os + 1) return false; // Double play by X
+    if (XWon && Xs === Os) return false; // O played after X already won
+    if (OWon && Xs > Os) return false; // X played after O already won
+    return true;
+};
+
+======
+
+14. https://leetcode.com/problems/ones-and-zeroes/
+
+/**
+ * @param {string[]} strs
+ * @param {number} m
+ * @param {number} n
+ * @return {number}
+ */
+var findMaxForm = function(S, M, N) {
+    let dp = Array.from({length:M+1},() => new Uint8Array(N+1))
+    for (let i = 0; i < S.length; i++) {
+        let str = S[i], zeros = 0, ones = 0
+        for (let j = 0; j < str.length; j++)
+            str.charAt(j) === "0" ? zeros++ : ones++
+        for (let j = M; j >= zeros; j--)
+            for (let k = N; k >= ones; k--)
+                dp[j][k] = Math.max(dp[j][k], dp[j-zeros][k-ones] + 1)
+    }
+    return dp[M][N]
+};
