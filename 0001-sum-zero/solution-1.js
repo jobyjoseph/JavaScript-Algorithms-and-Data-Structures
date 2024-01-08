@@ -8,12 +8,17 @@ sumZero([1, 2, 3]) // undefined
 
 function sumZero(arr) {
   for (let i = 0, j = arr.length - 1; i < j; ) {
-    if (Math.abs(arr[i]) == Math.abs(arr[j]) && arr[i] + arr[j] == 0) {
+    if (arr[i] + arr[j] == 0) {
       return [arr[i], arr[j]];
-    } else if (Math.abs(arr[i]) > Math.abs(arr[j])) {
+    } else if (arr[i] + arr[j] < 0) {
       i++;
     } else {
       j--;
     }
   }
 }
+
+/*
+Time complexity - O(n)
+Space complexity - O(1)
+*/
