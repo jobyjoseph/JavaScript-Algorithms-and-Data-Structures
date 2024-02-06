@@ -62,3 +62,166 @@ var shuffle = function(nums, n) {
     }
     return res;
 };
+
+======
+
+3. https://leetcode.com/problems/kids-with-the-greatest-number-of-candies/
+
+/**
+ * @param {number[]} candies
+ * @param {number} extraCandies
+ * @return {boolean[]}
+ */
+var kidsWithCandies = function(candies, extraCandies) {
+    let max = 0;
+    let res = [];
+    for(let i = 0; i < candies.length; i++) {
+        if(max < candies[i]) {
+            max = candies[i];
+        }
+    }
+    for(let i = 0; i < candies.length; i++) {
+        if(candies[i] + extraCandies >= max) {
+            res.push(true)
+        } else {
+            res.push(false)
+        }
+    }
+    return res;
+};
+
+======
+
+4. https://leetcode.com/problems/sum-of-all-subset-xor-totals
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var subsetXORSum = function(nums) {
+    
+    let subsets = [];
+
+  function recurse(current, remaining) {
+    if (remaining.length === 0) {
+      subsets.push(current);
+    } else {
+      recurse(current.concat([remaining[0]]), remaining.slice(1));
+      recurse(current, remaining.slice(1));
+    }
+  }
+
+  recurse([], nums);
+    
+    let sum = 0;
+    for(let i = 0; i < subsets.length; i++) {
+        const xorSum= eval(subsets[i].join('^') || 0)
+        sum+=xorSum
+    }
+    return sum;
+};
+
+======
+
+5. https://leetcode.com/problems/count-negative-numbers-in-a-sorted-matrix/
+
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var countNegatives = function(grid) {
+    let total = 0;
+    for(let i = 0; i < grid.length; i++) {
+        for(let j = 0; j < grid[0].length; j++) {
+            if(grid[i][j] < 0) {
+                total++;
+            }
+        }
+    }
+    return total;
+};
+
+======
+
+6. https://leetcode.com/problems/three-consecutive-odds
+
+/**
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+var threeConsecutiveOdds = function(arr) {
+    for(let i = 0; i < arr.length - 2; i++) {
+        if(arr[i] % 2 && arr[i+1] % 2 && arr[i+2] % 2) {
+            return true;
+        }
+    }
+    return false;
+};
+
+======
+
+7. https://leetcode.com/problems/decode-xored-array
+
+/**
+ * @param {number[]} encoded
+ * @param {number} first
+ * @return {number[]}
+ */
+var decode = function(encoded, first) {
+    let arr = [first];
+    for(let i = 0; i < encoded.length; i++) {
+        arr.push(encoded[i] ^ arr[i])
+    }
+    return arr;
+};
+
+======
+
+8. https://leetcode.com/problems/sort-array-by-parity-ii/
+
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var sortArrayByParityII = function(nums) {
+    let result = new Array(nums.length);
+
+    for(let i = 0, even = 0, odd = 1; i < nums.length; i++) {
+        if(nums[i] % 2 === 0) {
+            result[even] = nums[i];
+            even += 2;
+        } else {
+            result[odd] = nums[i];
+            odd += 2;
+        }
+        
+    }
+    return result;
+};
+
+======
+
+9. https://leetcode.com/problems/duplicate-zeros/
+
+/**
+ * @param {number[]} arr
+ * @return {void} Do not return anything, modify arr in-place instead.
+ */
+var duplicateZeros = function(arr) {
+    let cpy = [...arr];
+    for(let i = 0, j = 0; j < arr.length; i++, j++) {
+        if(cpy[i] !== 0) {
+            arr[j] = cpy[i];
+        } else {
+            arr[j] = cpy[i];
+            j++;
+            arr[j] = cpy[i];
+        }
+    }
+    arr.length = cpy.length;
+};
+
+======
+
+10. https://leetcode.com/problems/contains-duplicate-iii/
+
